@@ -20,7 +20,7 @@ class ContatoController extends Controller
      */
     public function index()
     {
-        return response()->json($this->contato->get());
+        return response()->json($this->contato->get(), 200);
     }
 
     /**
@@ -81,9 +81,27 @@ class ContatoController extends Controller
      * @param  \App\Models\Contato  $contato
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateContatoRequest $request, Contato $contato)
+    public function update(Request $request, $id)
     {
-        //
+        $contato = $this->contato->find($id);
+
+        if($contato == null){
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        $request->validate($contato->rules());
+
+        $data = explode('/', $request->data_de_nascimento);
+        $all = array();
+        array_push($all, $request->nome);
+        array_push($all, $request->email);
+        array_push($all, Carbon::createFromDate($data[2], $data[1], $data[0]));
+        array_push($all, $request->cpf);
+
+        $contato->fill($all);
+        $contato->save();
+
+        return response()->json($contato, 200);
     }
 
     /**
