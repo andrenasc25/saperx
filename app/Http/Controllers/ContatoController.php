@@ -110,8 +110,15 @@ class ContatoController extends Controller
      * @param  \App\Models\Contato  $contato
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contato $contato)
+    public function destroy($id)
     {
-        //
+        $contato = $this->contato->find($id);
+
+        if($contato == null){
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
+        $contato->delete();
+        return response()->json(['msg' => 'O contato foi removido com sucesso'], 200);
     }
 }
