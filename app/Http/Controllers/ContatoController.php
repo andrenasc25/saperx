@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Contato;
 use App\Http\Requests\StoreContatoRequest;
 use App\Http\Requests\UpdateContatoRequest;
+use Symfony\Component\HttpFoundation\Request;
+use Carbon\Carbon;
 
 class ContatoController extends Controller
 {
+    public function __construct(Contato $contato){
+        $this->contato = $contato;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,9 +39,17 @@ class ContatoController extends Controller
      * @param  \App\Http\Requests\StoreContatoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreContatoRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate($this->contato->rules());
+        $data = explode('/', $request->data_de_nascimento);
+        $contato = $this->contato->create([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'data_de_nascimento' => Carbon::createFromDate($data[2], $data[1], $data[0]),
+            'cpf' => $request->cpf
+        ]);
+        return response()->json($contato, 201);
     }
 
     /**
