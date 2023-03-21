@@ -20,7 +20,7 @@ class ContatoController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json($this->contato->get());
     }
 
     /**
