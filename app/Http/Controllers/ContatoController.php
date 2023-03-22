@@ -151,10 +151,8 @@ class ContatoController extends Controller
 
         $telefones = Telefone::where('contato_id', $contato->id)->get();
         foreach($telefones as $key => $telefone){
-            if($telefones[$key]->id == $request->filtro){
-                $tel = Telefone::find($telefones[$key]->id);
-                $tel->delete();
-            }
+            $tel = Telefone::find($telefones[$key]->id);
+            $tel->delete();
         }
 
         $contato->delete();
