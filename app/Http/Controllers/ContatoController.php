@@ -108,13 +108,19 @@ class ContatoController extends Controller
 
         $request->validate(Telefone::rules(), Telefone::feedback());
         $telefones = Telefone::where('contato_id', $contato->id)->get();
+        $telAtualizado = false;
         foreach($telefones as $key => $telefone){
             if($telefones[$key]->id == $request->filtro){
                 $tel = Telefone::where('id', $telefones[$key]->id)->first()->fill(array(
                     'telefone' => $request->telefone
                 ));
                 $tel->save();
+                $telAtualizado = true;
             }
+        }
+
+        if(!$telAtualizado){
+            return response()->json(['erro' => 'O id do telefone fornecido não pertence ao contato']);
         }
 
         $request->validate($contato->rules(), $contato->feedback());
