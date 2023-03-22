@@ -21,7 +21,7 @@ class ContatoController extends Controller
      */
     public function index()
     {
-        return response()->json($this->contato->get(), 200);
+        return response()->json($this->contato->with('telefones')->get(), 200);
     }
 
     /**

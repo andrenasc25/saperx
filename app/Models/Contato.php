@@ -29,4 +29,8 @@ class Contato extends Model
             'cpf.required' => 'O campo cpf não pode ficar vazio'
         ];
     }
+
+    public function telefones(){
+        return $this->hasMany('App\Models\Telefone');
+    }
 }
