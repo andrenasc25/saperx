@@ -100,16 +100,31 @@ class ContatoController extends Controller
             return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
 
-        $request->validate($contato->rules());
+        if($request->telefone){
+            if(!$request->has('filtro') || $request->filtro == null){
+                return response()->json(['erro' => 'É necessário selecionar qual o id do telefone a ser atualizado'], 400);
+            }
+        }
 
+        $request->validate(Telefone::rules(), Telefone::feedback());
+        $telefones = Telefone::where('contato_id', $contato->id)->get();
+        foreach($telefones as $key => $telefone){
+            if($telefones[$key]->id == $request->filtro){
+                $tel = Telefone::where('id', $telefones[$key]->id)->first()->fill(array(
+                    'telefone' => $request->telefone
+                ));
+                $tel->save();
+            }
+        }
+
+        $request->validate($contato->rules(), $contato->feedback());
         $data = explode('/', $request->data_de_nascimento);
-        $all = array();
-        array_push($all, $request->nome);
-        array_push($all, $request->email);
-        array_push($all, Carbon::createFromDate($data[2], $data[1], $data[0]));
-        array_push($all, $request->cpf);
-
-        $contato->fill($all);
+        $contato->fill(array(
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'data_de_nascimento' => Carbon::createFromDate($data[2], $data[1], $data[0]),
+            'cpf' => $request->cpf
+        ));
         $contato->save();
 
         return response()->json($contato, 200);

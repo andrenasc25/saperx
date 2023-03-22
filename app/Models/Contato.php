@@ -13,7 +13,7 @@ class Contato extends Model
     public function rules(){
         return [
             'nome' => 'required',
-            'email' => 'required|email|unique:contatos',
+            'email' => 'required|email|unique:contatos,email,'.$this->id,
             'data_de_nascimento' => 'required',
             'cpf' => 'required'
         ];
