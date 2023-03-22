@@ -42,7 +42,7 @@ class ContatoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->contato->rules());
+        $request->validate($this->contato->rules(), $this->contato->feedback());
         $data = explode('/', $request->data_de_nascimento);
         $contato = $this->contato->create([
             'nome' => $request->nome,

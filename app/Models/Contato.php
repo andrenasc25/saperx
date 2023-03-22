@@ -13,9 +13,20 @@ class Contato extends Model
     public function rules(){
         return [
             'nome' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:contatos',
             'data_de_nascimento' => 'required',
             'cpf' => 'required'
+        ];
+    }
+
+    public function feedback(){
+        return [
+            'nome.required' => 'O campo nome não pode ficar vazio',
+            'email.required' => 'O campo email não pode ficar vazio',
+            'email.email' => 'O campo email tem que ser do tipo email',
+            'email.unique' => 'Já existe um contato com o e-mail inserido',
+            'data_de_nascimento' => 'O campo data_de_nascimento não pode ficar vazio',
+            'cpf.required' => 'O campo cpf não pode ficar vazio'
         ];
     }
 }
