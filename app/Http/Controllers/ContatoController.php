@@ -14,6 +14,11 @@ class ContatoController extends Controller
     public function __construct(Contato $contato){
         $this->contato = $contato;
     }
+
+    public function getNomes(){
+        return response()->json($this->contato->pluck('nome'));
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('contato', 'App\Http\Controllers\ContatoController');
+Route::get('nomes', 'App\Http\Controllers\ContatoController@getNomes');
 Route::delete('telefone/{id}', 'App\Http\Controllers\TelefoneController@destroy');
