@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contato;
+use App\Models\Telefone;
 use App\Http\Requests\StoreContatoRequest;
 use App\Http\Requests\UpdateContatoRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,6 +50,16 @@ class ContatoController extends Controller
             'data_de_nascimento' => Carbon::createFromDate($data[2], $data[1], $data[0]),
             'cpf' => $request->cpf
         ]);
+        if($request->telefone){
+            $contato = Contato::where('email', $request->email)->first();
+            $telefones = explode(',', $request->telefone);
+            foreach($telefones as $telefone){
+                Telefone::create([
+                    'telefone' => $telefone,
+                    'contato_id' => $contato->id
+                ]);
+            }
+        }
         return response()->json($contato, 201);
     }
 
