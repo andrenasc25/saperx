@@ -106,7 +106,6 @@ class ContatoController extends Controller
             }
         }
 
-        $request->validate(Telefone::rules(), Telefone::feedback());
         $telefones = Telefone::where('contato_id', $contato->id)->get();
         $telAtualizado = false;
         foreach($telefones as $key => $telefone){
@@ -120,7 +119,7 @@ class ContatoController extends Controller
         }
 
         if(!$telAtualizado){
-            return response()->json(['erro' => 'O id do telefone fornecido não pertence ao contato']);
+            return response()->json(['erro' => 'É necessário fornecer um id de telefone que pertença ao contato']);
         }
 
         $request->validate($contato->rules(), $contato->feedback());
@@ -142,12 +141,20 @@ class ContatoController extends Controller
      * @param  \App\Models\Contato  $contato
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $contato = $this->contato->find($id);
 
         if($contato == null){
             return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
+        $telefones = Telefone::where('contato_id', $contato->id)->get();
+        foreach($telefones as $key => $telefone){
+            if($telefones[$key]->id == $request->filtro){
+                $tel = Telefone::find($telefones[$key]->id);
+                $tel->delete();
+            }
         }
 
         $contato->delete();
