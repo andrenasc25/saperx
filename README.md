@@ -1,5 +1,5 @@
 # API Saperx
-<p align="center">Uma api para Agenda Telefônica</p>
+<p align="center">Uma api para Agenda Telefônica, Teste de seleção para a empresa SaperX</p>
 
 ### 🎲 Rodando o Back End
 
@@ -32,15 +32,3 @@ $ php artisan serve
 | `POST` | http://localhost:8000/api/v1/produto/1,2,3 | Atualiza produtos de acordo com parâmetros e valores passados | _method: put, nome: nome atualizado;nome atualizado2;nome atualizado3 e descrição atualizada;descrição atualizada2; descrição atualizada3 |
 | `DELETE` | http://localhost:8000/api/contato/1 | Deleta um contato pelo ID | Não é necessário enviar valores |
 | `DELETE` | http://localhost:8000/api/telefone/1?filtro=2 | Deleta um número de telefone, o parâmetro é o id do contato e o filtro é o id do telefone | Não é necessário enviar valores |
-
-
-### Autor
----
-
-<a href="https://github.com/andre-rep">
- <img style="border-radius:50px;" src="https://avatars.githubusercontent.com/u/36203075?v=4" width="100px;" alt=""/>
- <br />
- <sub><b>André Nascimento</b></sub></a> <a href="https://github.com/andre-rep" title="Github">🚀</a>
-
-
-Feito com ❤️ por André Nascimento
