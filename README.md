@@ -1,5 +1,5 @@
 # API Saperx
-<p align="center">Uma api para Agenda Telefônica, Teste de seleção para a empresa SaperX</p>
+<p align="center">Uma api para Agenda Telefônica. Teste de seleção para a empresa SaperX</p>
 
 ### 🎲 Rodando o Back End
 
